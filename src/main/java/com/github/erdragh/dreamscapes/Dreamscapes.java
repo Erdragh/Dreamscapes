@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BedBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.MinecraftClientGame;
@@ -32,13 +33,26 @@ public class Dreamscapes implements ModInitializer {
 
             var dreamRegistryKey = RegistryKey.of(Registry.WORLD_KEY, new Identifier(Dreamscapes.MODID, "dream"));
 
-            var x = entity.world.getBlockState(pos);
             if (entity instanceof ServerPlayerEntity && !entity.getWorld().getRegistryKey().equals(dreamRegistryKey)) {
+                var originWorld = entity.getWorld();
                 var dreamWorld = entity.getServer().getWorld(dreamRegistryKey);
                 System.out.println(dreamWorld.getRegistryKey().getValue());
-                var z = x.with(BooleanProperty.of("occupied"), false);
-                entity.getWorld().setBlockState(pos, z);
-                ((ServerPlayerEntity) entity).teleport(dreamWorld, entity.getX(), entity.getY(), entity.getZ(), entity.getYaw(), entity.getPitch());
+                originWorld.setBlockState(pos, originWorld.getBlockState(pos).with(BooleanProperty.of("occupied"), false));
+                int teleportHeight = 500;
+                for (int i = -64; i < 319; i++) {
+                    var blockState = dreamWorld.getBlockState(pos.withY(i));
+                    if (blockState.isFullCube(dreamWorld, pos.withY(i))) {
+                        teleportHeight = i;
+                    }
+                }
+                if (teleportHeight > 319) {
+                    teleportHeight = 320;
+                }
+                teleportHeight++;
+                ((ServerPlayerEntity) entity).teleport(dreamWorld, entity.getX(), teleportHeight, entity.getZ(), entity.getYaw(), entity.getPitch());
+                if (teleportHeight > 319) {
+                    dreamWorld.setBlockState(pos.withY(--teleportHeight), Blocks.STONE.getDefaultState());
+                }
             }
         });
     }
