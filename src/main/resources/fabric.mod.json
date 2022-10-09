@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "dreamscapes",
+  "version": "${version}",
+  "name": "Dreamscapes",
+  "description": "Dreams. In Minecraft.",
+  "authors": [
+    "Erdragh"
+  ],
+  "contact": {
+    "website": "erdragh.github.io/dreamscapes",
+    "repo": "https://github.com/Erdragh/dreamscapes"
+  },
+  "license": "MIT",
+  "icon": "assets/dreamscapes/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.github.erdragh.dreamscapes.client.DreamscapesClient"
+    ],
+    "main": [
+      "com.github.erdragh.dreamscapes.Dreamscapes"
+    ]
+  },
+  "mixins": [
+    "dreamscapes.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "fabric": "*",
+    "minecraft": "1.19.2"
+  }
+}
