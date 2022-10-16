@@ -77,6 +77,10 @@ public class Dreamscapes implements ModInitializer {
       var dreamRegistryKey = RegistryKey.of(Registry.WORLD_KEY, new Identifier(Dreamscapes.MODID, "dream"));
 
       if (entity instanceof ServerPlayerEntity && !entity.getWorld().getRegistryKey().equals(dreamRegistryKey)) {
+        var player = ((ServerPlayerEntity) entity);
+        player.getStatusEffects().forEach((statusEffectInstance -> {
+          System.out.println(statusEffectInstance.getEffectType().getName());
+        }));
         var originWorld = entity.getWorld();
         var dreamWorld = entity.getServer().getWorld(dreamRegistryKey);
         System.out.println(dreamWorld.getRegistryKey().getValue());
@@ -92,7 +96,7 @@ public class Dreamscapes implements ModInitializer {
           teleportHeight = 320;
         }
         teleportHeight++;
-        ((ServerPlayerEntity) entity).teleport(dreamWorld, entity.getX(), teleportHeight, entity.getZ(), entity.getYaw(), entity.getPitch());
+        player.teleport(dreamWorld, entity.getX(), teleportHeight, entity.getZ(), entity.getYaw(), entity.getPitch());
         if (teleportHeight > 319) {
           dreamWorld.setBlockState(pos.withY(--teleportHeight), Blocks.STONE.getDefaultState());
         }
