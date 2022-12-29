@@ -20,14 +20,23 @@
     ],
     "main": [
       "com.github.erdragh.dreamscapes.Dreamscapes"
+    ],
+    "cardinal-components": [
+      "com.github.erdragh.dreamscapes.components.PlayerComponents"
     ]
   },
   "mixins": [
     "dreamscapes.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.9",
-    "fabric": "*",
-    "minecraft": "1.19.2"
+    "fabricloader": ">=0.14.12",
+    "fabric-api": "*",
+    "minecraft": "1.19.3"
+  },
+  "custom": {
+    "cardinal-components": [
+      "dreamscapes:player_origin_position",
+      "dreamscapes:player_dream_position"
+    ]
   }
 }

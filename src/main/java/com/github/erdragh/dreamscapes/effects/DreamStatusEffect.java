@@ -18,7 +18,7 @@ public class DreamStatusEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity instanceof PlayerEntity) {
-            ((PlayerEntity) entity).addExperience(1 << amplifier);
+            // ((PlayerEntity) entity).addExperience(1 << amplifier);
         }
     }
 }
